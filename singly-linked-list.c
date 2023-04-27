@@ -1,15 +1,16 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-typedef struct Node {
-	int key;
-	struct Node* link;
+typedef struct Node {  //노드를 구성하는 구조체
+	int key;  //노드가 가질 수 있는 값
+	struct Node* link;  //다음 노드를 가르키는 포인터
 } listNode;
 
-typedef struct Head {
-	struct Node* first;
+typedef struct Head {  //첫번째 노드를 가르키는 구조체
+	struct Node* first;  //첫 노드를 가르키는 포인터
 }headNode;
 
+//함수 선언
 headNode* initialize(headNode* h);
 int freeList(headNode* h);
 
@@ -45,6 +46,7 @@ int main()
 		printf("Command = ");
 		scanf(" %c", &command);
 
+        //입력 받은 command 값에 따른 케이스
 		switch(command) {
 		case 'z': case 'Z':
 			headnode = initialize(headnode);
@@ -95,22 +97,20 @@ int main()
 }
 
 
-headNode* initialize(headNode* h) {
-
+headNode* initialize(headNode* h) {  //연결리스트 초기화
 	if(h != NULL)
 		freeList(h);
 
 	headNode* temp = (headNode*)malloc(sizeof(headNode));
-	temp->first = NULL;
+	temp->first = NULL;  //첫번째 포인터 초기화
 	return temp;
 }
 
 
-int freeList(headNode* h){
-
+int freeList(headNode* h){  //연결리스트 해제
 	listNode* p = h->first;
 
-	listNode* prev = NULL;
+	listNode* prev = NULL;  //구조체 해제
 	while(p != NULL) {
 		prev = p;
 		p = p->link;
@@ -121,9 +121,8 @@ int freeList(headNode* h){
 }
 
 
-int insertNode(headNode* h, int key) {
-
-	listNode* node = (listNode*)malloc(sizeof(listNode));
+int insertNode(headNode* h, int key) {  //새로운 노드 삽입
+	listNode* node = (listNode*)malloc(sizeof(listNode));  //키값을 가지는 동적 노드
 	node->key = key;
 	node->link = NULL;
 
@@ -136,7 +135,7 @@ int insertNode(headNode* h, int key) {
 	listNode* n = h->first;
 	listNode* trail = h->first;
 
-	while(n != NULL) {
+	while(n != NULL) {  //정렬에 맞게 연결리스트에 삽입
 		if(n->key >= key) {
 			if(n == h->first) {
 				h->first = node;
@@ -157,8 +156,7 @@ int insertNode(headNode* h, int key) {
 }
 
 
-int insertLast(headNode* h, int key) {
-
+int insertLast(headNode* h, int key) {  //연결리스트 마지막에 삽입
 	listNode* node = (listNode*)malloc(sizeof(listNode));
 	node->key = key;
 	node->link = NULL;
@@ -177,9 +175,7 @@ int insertLast(headNode* h, int key) {
 	return 0;
 }
 
-
-int insertFirst(headNode* h, int key) {
-
+int insertFirst(headNode* h, int key) {  //연결리스트 처음에 삽입
 	listNode* node = (listNode*)malloc(sizeof(listNode));
 	node->key = key;
 
@@ -189,9 +185,7 @@ int insertFirst(headNode* h, int key) {
 	return 0;
 }
 
-
-int deleteNode(headNode* h, int key) {
-
+int deleteNode(headNode* h, int key) {  //노드 삭제
 	if (h->first == NULL)
 	{
 		printf("nothing to delete.\n");
@@ -201,7 +195,7 @@ int deleteNode(headNode* h, int key) {
 	listNode* n = h->first;
 	listNode* trail = NULL;
 
-	while(n != NULL) {
+	while(n != NULL) {  //key 값인 노드 삭제
 		if(n->key == key) {
 			if(n == h->first) {
 				h->first = n->link;
@@ -222,8 +216,7 @@ int deleteNode(headNode* h, int key) {
 }
 
 
-int deleteLast(headNode* h) {
-
+int deleteLast(headNode* h) {  //마지막 노드 삭제
 	if (h->first == NULL)
 	{
 		printf("nothing to delete.\n");
@@ -233,8 +226,8 @@ int deleteLast(headNode* h) {
 	listNode* n = h->first;
 	listNode* trail = NULL;
 
-	if(n->link == NULL) {
-		h->first = NULL;
+	if(n->link == NULL) {  //연결리스트 마지막 노드 삭제
+		h->first = NULL; 
 		free(n);
 		return 0;
 	}
@@ -250,8 +243,7 @@ int deleteLast(headNode* h) {
 	return 0;
 }
 
-int deleteFirst(headNode* h) {
-
+int deleteFirst(headNode* h) {  //첫번째 노드 삭제
 	if (h->first == NULL)
 	{
 		printf("nothing to delete.\n");
@@ -265,10 +257,7 @@ int deleteFirst(headNode* h) {
 	return 0;
 }
 
-
-int invertList(headNode* h) {
-
-
+int invertList(headNode* h) {  //연결리스트 도치
 	if(h->first == NULL) {
 		printf("nothing to invert...\n");
 		return 0;
@@ -289,8 +278,7 @@ int invertList(headNode* h) {
 	return 0;
 }
 
-
-void printList(headNode* h) {
+void printList(headNode* h) {  //연결리스트 노드 출력
 	int i = 0;
 	listNode* p;
 
